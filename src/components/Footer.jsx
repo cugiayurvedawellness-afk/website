@@ -138,7 +138,22 @@ const Footer = () => {
               color: '#a0aec0',
               fontSize: '0.85rem'
             }}>
-              Powered by SkillKoder
+              Powered by{' '}
+              <a
+                href="https://www.skillkoder.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: '#8FBC8F',
+                  textDecoration: 'none',
+                  cursor: 'pointer',
+                  transition: 'color 0.3s'
+                }}
+                onMouseEnter={(e) => e.target.style.color = '#6B8E23'}
+                onMouseLeave={(e) => e.target.style.color = '#8FBC8F'}
+              >
+                SkillKoder
+              </a>
             </p>
           </div>
           
