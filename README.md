@@ -1,10 +1,10 @@
-# Himalayan Ayurveda Retreat Website
+# Divineretreat Retreat Website
 
 A modern, responsive website for an authentic Ayurvedic retreat center located in Rishikesh, Uttarakhand, India.
 
 ## Overview
 
-This website showcases the services and programs offered by Himalayan Ayurveda Retreat, including:
+This website showcases the services and programs offered by Divineretreat Retreat, including:
 - Yoga & Meditation Programs
 - Panchakarma Treatment
 - Therapeutic Massage & Ayurvedic Therapies
@@ -119,7 +119,7 @@ npm run deploy
 
 ## Location Information
 
-**Himalayan Ayurveda Retreat**
+**Divineretreat Retreat**
 Rishikesh, Uttarakhand, India
 
 Rishikesh is known as the "Yoga Capital of the World" and is located in the foothills of the Himalayas along the banks of the sacred Ganges River.

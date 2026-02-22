@@ -9,11 +9,18 @@ import Footer from './components/Footer.jsx';
 import YogaProgram from './components/YogaProgram.jsx';
 import PanchakarmaProgram from './components/PanchakarmaProgram.jsx';
 import MeditationProgram from './components/MeditationProgram.jsx';
+import Testimonials from './components/Testimonials.jsx';
 import BookingForm from './components/BookingForm.jsx';
+import { initializeAnalytics, trackPageView } from './utils/analytics.js';
 
 const App = () => {
   const [route, setRoute] = useState(window.location.hash || '#/');
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+
+  // Initialize Google Analytics on component mount
+  useEffect(() => {
+    initializeAnalytics();
+  }, []);
 
   useEffect(() => {
     const onHash = () => setRoute(window.location.hash || '#/');
@@ -29,6 +36,19 @@ const App = () => {
     };
   }, []);
 
+  // Track page views when route changes
+  useEffect(() => {
+    const path = (route.replace('#', '') || '/').toLowerCase();
+    let pageTitle = 'Divineretreat Retreat';
+    
+    if (path.startsWith('/services/yoga')) pageTitle = 'Yoga Program';
+    else if (path.startsWith('/services/panchakarma')) pageTitle = 'Panchakarma Program';
+    else if (path.startsWith('/services/meditation')) pageTitle = 'Meditation Program';
+    else pageTitle = 'Home';
+    
+    trackPageView(path, pageTitle);
+  }, [route]);
+
   // simple hash router
   const renderRoute = () => {
     const path = (route.replace('#', '') || '/').toLowerCase();
@@ -36,13 +56,14 @@ const App = () => {
     if (path.startsWith('/services/panchakarma')) return <PanchakarmaProgram />;
     if (path.startsWith('/services/meditation')) return <MeditationProgram />;
 
-    // default: landing sections
+    // default: landing sections (including testimonials)
     return (
       <>
         <Hero />
         <About />
         <Services />
         <Features />
+        <Testimonials />
         <Contact />
       </>
     );

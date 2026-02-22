@@ -65,7 +65,7 @@ const Navbar = () => {
               WebkitTextFillColor: 'transparent',
               margin: 0
             }}>
-              Himalayan Ayurveda
+              Divineretreat
             </h1>
           </div>
 
@@ -137,6 +137,22 @@ const Navbar = () => {
               onMouseEnter={(e) => e.target.style.color = '#6B8E23'}
               onMouseLeave={(e) => e.target.style.color = '#1a202c'}>
                 Facilities
+              </a>
+            </li>
+            <li>
+              <a onClick={() => handleNavClick('testimonials')} style={{
+                color: '#1a202c',
+                textDecoration: 'none',
+                fontSize: '0.95rem',
+                fontWeight: '500',
+                cursor: 'pointer',
+                position: 'relative',
+                padding: '0.5rem 0',
+                transition: 'color 0.3s ease'
+              }}
+              onMouseEnter={(e) => e.target.style.color = '#6B8E23'}
+              onMouseLeave={(e) => e.target.style.color = '#1a202c'}>
+                Testimonials
               </a>
             </li>
             <li>

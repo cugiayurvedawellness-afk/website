@@ -30,7 +30,7 @@ const Footer = () => {
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
             }}>
-              Himalayan Ayurveda
+              Divineretreat
             </h3>
             <p style={{
               color: '#cbd5e0',
@@ -131,7 +131,7 @@ const Footer = () => {
               color: '#cbd5e0',
               fontSize: '0.9rem'
             }}>
-              © {new Date().getFullYear()} Himalayan Ayurveda Retreat. All rights reserved.
+              © {new Date().getFullYear()} Divineretreat Retreat. All rights reserved.
             </p>
             <p style={{
               margin: 0,

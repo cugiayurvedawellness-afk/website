@@ -320,7 +320,7 @@ const Contact = () => {
                   <div>
                     <h4 style={{ margin: 0, marginBottom: '0.25rem', color: '#2d3748', fontWeight: '600' }}>Location</h4>
                     <p style={{ margin: 0, color: '#4a5568' }}>
-                      Himalayan Ayurveda Retreat<br/>
+                      Divineretreat Retreat<br/>
                       Rishikesh, Uttarakhand<br/>
                       India
                     </p>
