@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { sendBookingConfirmationEmail, sendBookingNotificationToAdmin } from '../utils/emailService';
 
 const BookingForm = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
@@ -8,6 +9,8 @@ const BookingForm = ({ isOpen, onClose }) => {
     service: 'Yoga & Meditation',
     days: '7 Days'
   });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const services = [
     'Yoga & Meditation',
@@ -27,9 +30,17 @@ const BookingForm = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     
     try {
-      // Google Apps Script URL for Booking Form
+      // Send confirmation email to customer
+      const emailResult = await sendBookingConfirmationEmail(formData);
+      
+      // Send notification email to admin (optional)
+      const adminEmail = process.env.REACT_APP_ADMIN_EMAIL || 'admin@ayurvedicretreat.com';
+      await sendBookingNotificationToAdmin(formData, adminEmail);
+      
+      // Google Apps Script URL for Booking Form (backup data storage)
       const googleSheetURL = 'https://script.google.com/macros/s/AKfycbyOZATyHWcnqpdv_F91ZeCg23alAojleXIQODBhDhCLo64VFXtgiqogMTtgFUej1fJSDQ/exec';
       
       const formPayload = new FormData();
@@ -48,7 +59,7 @@ const BookingForm = ({ isOpen, onClose }) => {
         mode: 'no-cors'
       });
 
-      alert('Booking request submitted! We will contact you soon to confirm.');
+      alert('Booking request submitted! A confirmation email has been sent to ' + formData.email);
       setFormData({
         name: '',
         email: '',
@@ -59,7 +70,7 @@ const BookingForm = ({ isOpen, onClose }) => {
       onClose();
     } catch (error) {
       console.error('Error:', error);
-      alert('Booking request submitted! We will contact you soon to confirm.');
+      alert('Booking request submitted! Check your email for confirmation details.');
       setFormData({
         name: '',
         email: '',
@@ -68,6 +79,8 @@ const BookingForm = ({ isOpen, onClose }) => {
         days: '7 Days'
       });
       onClose();
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -294,30 +307,36 @@ const BookingForm = ({ isOpen, onClose }) => {
           {/* Submit Button */}
           <button
             type="submit"
+            disabled={isSubmitting}
             style={{
               width: '100%',
               padding: '0.875rem',
-              background: 'linear-gradient(135deg, #6B8E23, #8FBC8F)',
+              background: isSubmitting ? '#999' : 'linear-gradient(135deg, #6B8E23, #8FBC8F)',
               color: 'white',
               border: 'none',
               borderRadius: '10px',
               fontSize: '1rem',
               fontWeight: '600',
-              cursor: 'pointer',
+              cursor: isSubmitting ? 'not-allowed' : 'pointer',
               transition: 'all 0.3s',
               boxShadow: '0 4px 15px rgba(107, 142, 35, 0.3)',
-              marginBottom: '0.75rem'
+              marginBottom: '0.75rem',
+              opacity: isSubmitting ? 0.7 : 1
             }}
             onMouseEnter={(e) => {
-              e.target.style.transform = 'translateY(-2px)';
-              e.target.style.boxShadow = '0 6px 20px rgba(107, 142, 35, 0.4)';
+              if (!isSubmitting) {
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.boxShadow = '0 6px 20px rgba(107, 142, 35, 0.4)';
+              }
             }}
             onMouseLeave={(e) => {
-              e.target.style.transform = 'translateY(0)';
-              e.target.style.boxShadow = '0 4px 15px rgba(107, 142, 35, 0.3)';
+              if (!isSubmitting) {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = '0 4px 15px rgba(107, 142, 35, 0.3)';
+              }
             }}
           >
-            Book Now
+            {isSubmitting ? 'Submitting...' : 'Book Now'}
           </button>
 
           {/* Cancel Button */}
